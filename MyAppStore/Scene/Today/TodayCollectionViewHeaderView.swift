@@ -15,6 +15,7 @@ class TodayCollectionHeaderView: UICollectionReusableView {
         
         label.text = "투데이"
         label.font = .systemFont(ofSize: 36.0, weight: .black)
+        label.textColor = .label
         
         return label
     }()
@@ -22,8 +23,14 @@ class TodayCollectionHeaderView: UICollectionReusableView {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "\(Date.now)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M월 d일 EEEE"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let convertDate = dateFormatter.string(from: Date.now)
+        
+        label.text = "\(convertDate)"
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.textColor = .secondaryLabel
         
         return label
     }()

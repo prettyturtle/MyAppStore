@@ -39,6 +39,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12.0
         
         return imageView
     }()
@@ -50,7 +51,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         titleLabel.text = "title"
         subTitleLabel.text = "subTitle"
         descriptionLabel.text = "description"
-        imageView.image = UIImage(systemName: "applelogo")
+        imageView.image = UIImage(named: "mock")
     }
     
     required init?(coder: NSCoder) {

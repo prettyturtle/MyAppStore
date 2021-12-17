@@ -51,9 +51,7 @@ extension TodayViewController: UICollectionViewDataSource {
     // Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "todayCell", for: indexPath) as? TodayCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.backgroundColor = .darkGray
-        
+                
         return cell
     }
     
