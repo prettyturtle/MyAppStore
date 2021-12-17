@@ -46,7 +46,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        setupViews()
         titleLabel.text = "title"
         subTitleLabel.text = "subTitle"
         descriptionLabel.text = "description"
@@ -59,7 +59,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
 }
 
 private extension TodayCollectionViewCell {
-    func setupLayout() {
+    func setupViews() {
         [
             imageView,
             subTitleLabel,
