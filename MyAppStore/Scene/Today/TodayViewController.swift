@@ -91,4 +91,8 @@ extension TodayViewController: UICollectionViewDelegateFlowLayout {
         
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("collectionView Today didSelectItemAt Called\(indexPath.description)")
+    }
 }
