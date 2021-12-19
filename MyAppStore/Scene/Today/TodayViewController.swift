@@ -94,5 +94,9 @@ extension TodayViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("collectionView Today didSelectItemAt Called\(indexPath.description)")
+        
+        let appDetailViewController = AppDetailViewController()
+        
+        present(appDetailViewController, animated: true)
     }
 }
