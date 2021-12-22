@@ -10,6 +10,8 @@ import SnapKit
 
 class TodayViewController: UIViewController {
     
+    private lazy var todayList = [Today]()
+    
     private lazy var collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -39,19 +41,23 @@ class TodayViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        
+        fetchData()
     }
 }
 
 extension TodayViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return todayList.count
     }
     
     // Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "todayCell", for: indexPath) as? TodayCollectionViewCell else { return UICollectionViewCell() }
-                
+        
+        let today = todayList[indexPath.item]
+        
+        cell.setupView(today: today)
+        
         return cell
     }
     
@@ -93,10 +99,26 @@ extension TodayViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("collectionView Today didSelectItemAt Called\(indexPath.description)")
         
-        let appDetailViewController = AppDetailViewController()
+        let today = todayList[indexPath.item]
+        let appDetailViewController = AppDetailViewController(today: today)
         
         present(appDetailViewController, animated: true)
+    }
+}
+
+private extension TodayViewController {
+    func fetchData() {
+        guard let url = Bundle.main.url(forResource: "Today", withExtension: "plist") else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let result = try PropertyListDecoder().decode([Today].self, from: data)
+            
+            todayList = result
+        } catch {
+            print("TodayViewController - fetchData - Error 입니다.")
+        }
+        
     }
 }

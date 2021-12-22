@@ -10,6 +10,8 @@ import SnapKit
 
 class AppDetailViewController: UIViewController {
     
+    private let today: Today
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -59,21 +61,38 @@ class AppDetailViewController: UIViewController {
         return button
     }()
     
+    init(today: Today) {
+        self.today = today
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
         
         setupViews()
-        
-        titleLabel.text = "titleLabel"
-        subTitleLabel.text = "subTitleLabel"
-        imageView.image = UIImage(named: "mock")
     }
 }
 
 private extension AppDetailViewController {
     func setupViews() {
+        setupLayout()
+        
+        titleLabel.text = today.title
+        subTitleLabel.text = today.subTitle
+        
+        if let imageURL = URL(string: today.imageURL) {
+            imageView.kf.setImage(with: imageURL)
+        }
+    }
+    
+    func setupLayout() {
         [
             imageView,
             titleLabel,

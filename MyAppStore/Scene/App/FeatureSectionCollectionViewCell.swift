@@ -53,7 +53,22 @@ class FeatureSectionCollectionViewCell: UICollectionViewCell {
     }()
 }
 extension FeatureSectionCollectionViewCell {
-    func setupViews() {
+    
+    func setupViews(feature: Feature) {
+        
+        setupLayout()
+        
+        typeLabel.text = feature.type
+        appNameLabel.text = feature.appName
+        descriptionLabel.text = feature.description
+        
+        if let imageURL = URL(string: feature.imageURL) {
+            imageView.kf.setImage(with: imageURL)
+        }
+        
+    }
+    
+    func setupLayout() {
         [
             typeLabel,
             appNameLabel,
@@ -80,6 +95,5 @@ extension FeatureSectionCollectionViewCell {
             make.top.equalTo(descriptionLabel.snp.bottom).offset(8.0)
             make.bottom.equalToSuperview().inset(8.0)
         }
-        
     }
 }

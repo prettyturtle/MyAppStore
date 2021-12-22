@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class TodayCollectionViewCell: UICollectionViewCell {
     
@@ -14,6 +15,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 24.0, weight: .bold)
+        label.textColor = .white
         
         return label
     }()
@@ -22,6 +24,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.textColor = .white
         
         return label
     }()
@@ -30,6 +33,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.textColor = .white
         
         return label
     }()
@@ -37,30 +41,29 @@ class TodayCollectionViewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12.0
         
         return imageView
     }()
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        titleLabel.text = "title"
-        subTitleLabel.text = "subTitle"
-        descriptionLabel.text = "description"
-        imageView.image = UIImage(named: "mock")
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
-private extension TodayCollectionViewCell {
-    func setupViews() {
+extension TodayCollectionViewCell {
+    func setupView(today: Today) {
+        setupLayout()
+        
+        titleLabel.text = "\(today.title)"
+        subTitleLabel.text = "\(today.subTitle)"
+        descriptionLabel.text = "\(today.description)"
+        
+        if let imageURL = URL(string: today.imageURL) {
+            imageView.kf.setImage(with: imageURL)
+        }
+        
+    }
+    
+    func setupLayout() {
         [
             imageView,
             subTitleLabel,

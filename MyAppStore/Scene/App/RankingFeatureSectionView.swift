@@ -10,6 +10,8 @@ import SnapKit
 
 class RankingFeatureSectionView: UIView {
     
+    private lazy var rankingFeatureList = [RankingFeature]()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         
@@ -54,6 +56,7 @@ class RankingFeatureSectionView: UIView {
         super.init(frame: frame)
         
         setupLayout()
+        fetchData()
     }
     
     required init?(coder: NSCoder) {
@@ -91,16 +94,30 @@ private extension RankingFeatureSectionView {
             make.top.equalTo(collectionView.snp.bottom).offset(16.0)
         }
     }
+    
+    func fetchData() {
+        guard let url = Bundle.main.url(forResource: "RankingFeature", withExtension: "plist") else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let result = try PropertyListDecoder().decode([RankingFeature].self, from: data)
+            
+            rankingFeatureList = result
+        } catch {
+            print("RankingFeatureSectionView - fetchData - Error")
+        }
+    }
 }
 
 extension RankingFeatureSectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return rankingFeatureList.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankingFeatureCollectionViewCell", for: indexPath) as? RankingFeatureCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.setup()
+        let rankingFeature = rankingFeatureList[indexPath.item]
+        cell.setupViews(rankingFeature: rankingFeature)
         
         return cell
     }
